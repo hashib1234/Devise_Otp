@@ -4,9 +4,8 @@ class SessionsController < Devise::SessionsController
   end
 
   def create
-    puts params.inspect
     @user_id = session[:otp_login]
-    @user = User.find_by(id: @user_id, phone: params[:phone])
+    @user = User.find_by(id: @user_id)
     @otp = params[:user]["otp_attempt"]
 
     if @user.validate_and_consume_otp!(@otp)
