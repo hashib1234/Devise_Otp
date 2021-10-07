@@ -1,0 +1,92 @@
+<%= form_for(product) do |f| %>
+  <% if product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+      <% product.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :image_title %>
+    <%= f.text_field :image_title, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :image_desc %>
+    <%= f.text_area :image_desc , class: 'form-control',rows: 15, placeholder: 'Content'%>
+  </div>
+
+  <div class="form-group">
+        <label class="btn btn-primary">
+          Upload a main image file <%= f.file_field :main_image, style: 'display:none;' %>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label class="btn btn-primary">
+          Upload a thumb image file <%= f.file_field :thumb_image, style: 'display:none;' %>
+        </label>
+  </div>
+  <div class="form-group">
+   <%= f.label :Category %>
+    <%= f.collection_select(:type_id, Type.all, :id, :title,
+                              {
+                                include_blank: true
+                              },
+                              class: 'form-control'
+                            )
+    %>
+  </div>
+  
+  <div class="form-group">
+   
+    <%= radio_button_tag 'but1', 'male'%>
+    <label class="form-check-label" for="flexCheckDefault">
+    Yes, Item for Sale
+    </label>
+    <%= radio_button_tag 'but2', 'male'%>
+    <label class="form-check-label" for="flexCheckDefault">
+    No, it’s free.
+  </label>
+  </div>
+  <div class="form-group" style="display: none" id="price">
+
+    
+    <%= f.label :price %>
+    <%= f.text_field :price, class: 'form-control' %>
+  </div>
+
+
+  <div class="actions">
+    <%= f.submit :class => 'btn btn-primary'%>
+  </div>
+<% end %>
+<script >
+
+  $('#but1_male').change(function() {
+
+    
+  $("#price").show();
+  $("#but2_male").prop('checked', false); 
+
+   
+
+    })
+  $('#but2_male').change(function() {
+
+    
+  $("#price").hide();
+  $("#but1_male").prop('checked', false); 
+      
+
+   
+
+    })
+
+
+</script>
